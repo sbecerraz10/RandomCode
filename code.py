@@ -1,20 +1,21 @@
 import markdown
 from docx import Document
+from docx.shared import Inches
 
-def markdown_to_word(markdown_file, output_file):
+def convert_md_to_docx(input_file_path, output_file_path):
     # Read the markdown file
-    with open(markdown_file, 'r') as f:
-        markdown_text = f.read()
-    
+    with open(input_file_path, 'r') as input_file:
+        text = input_file.read()
+
     # Convert markdown to HTML
-    html_text = markdown.markdown(markdown_text)
-    
+    html = markdown.markdown(text)
+
     # Create a new Word document
     doc = Document()
-    
-    # Add each paragraph from the HTML as a new paragraph in the Word document
-    for paragraph in html_text.split('\n'):
-        doc.add_paragraph(paragraph)
-    
-    # Save the Word document
-    doc.save(output_file)
+
+    # Add the converted HTML to the document
+    doc.add_paragraph(html)
+
+    # Save the document as a .docx file
+    doc.save(output_file_path + '.docx')
+
